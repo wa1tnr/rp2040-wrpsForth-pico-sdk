@@ -1,0 +1,22 @@
+
+this.is.compared.before.and.after.size.git.rm-rf--cached.dot.log
+
+ psdk $  ls
+wokwi_CircSimApps-a
+
+ psdk $  du -ka | sort -rn | sed 4q
+267556  .
+267552  ./wokwi_CircSimApps-a
+201104  ./wokwi_CircSimApps-a/wrpsForth
+199180  ./wokwi_CircSimApps-a/wrpsForth/pico-sdk
+
+ psdk $  cd ../jop/
+
+ psdk $  du -ka | sort -rn | sed 4q
+15676   .
+15672   ./new_wok_CirSimA-temp-ijk
+15260   ./new_wok_CirSimA-temp-ijk/.git
+15076   ./new_wok_CirSimA-temp-ijk/.git/objects
+ psdk $ 
+
+Sat 23 Dec 21:14:24 UTC 2023
