@@ -1,4 +1,4 @@
-// Wed  6 Apr 13:10:32 UTC 2022
+// Sat  9 Apr 15:59:14 UTC 2022
 
 // GPIO 6 7 8 9 10 and 11 now in use (real hardware)
 // setmask and clrmask now operate on this array,
@@ -352,8 +352,8 @@ void crufty_printer(void) {
     // printf("%s", dofilldatus);
 }
 
-#define WOKWI_COMPILED
 #undef WOKWI_COMPILED
+#define WOKWI_COMPILED
 
 #ifdef WOKWI_COMPILED
 #warning no bootrom code
@@ -450,25 +450,29 @@ uint64_t D=0; // for double result of multiplication
 // application regs and flags
 uint8_t FL=0; // flags
 uint8_t CMD=0; // command - shift regs for 7 segment display on the other core
+// uint8_t SPD=1; // wait multiplier
 uint8_t LVAL_0; // glyph encoded into 8 bits
 uint8_t LVAL_1;
 uint8_t LVAL_2;
 uint8_t LVAL_3;
 
 // data stack
-#define STKSIZE 16
+#define STKSIZE 32
 uint32_t stack[STKSIZE];
 #define DROP T=stack[--S]
 #define DUP stack[S++]=T
 
 // return stack
-#define RSTKSIZE 16
+#define RSTKSIZE 32
 uint32_t rstack[RSTKSIZE];
 #define PUSH rstack[R++]=T
 #define POP T=rstack[--R]
 
 // RAM
-#define RAMSIZE 2048
+// #define RAMSIZE 2048
+// #define RAMSIZE 4096
+#define RAMSIZE 8192
+// #define RAMSIZE 16384
 uint8_t ram[RAMSIZE];
 
 // Forth code words
@@ -1026,14 +1030,14 @@ void _setmask() {
     // T = W * 2 * 2 * 2 * 2 * 2 * 2 ;
     // T = W * 32 ;
     // T = W * %100000 ;
-    W = T ; T = W * GLOBMASK ;
+    N = T ; T = N * GLOBMASK ;
     gpio_set_mask(T);
     DROP;
 }
 
 void _clrmask() {
     // T = W * 2 * 2 * 2 * 2 * 2 * 2 ;
-    W = T ; T = W * GLOBMASK ; // W = T ; T = W * 0x40 ;
+    N = T ; T = N * GLOBMASK ; // W = T ; T = W * 0x40 ;
     gpio_clr_mask(T);
     DROP;
 }
@@ -1051,23 +1055,23 @@ void _setmaskbb(){
 
     // T = T - 0x10;
 
-    DUP; W=T;
-    if (W &= 0x8) {
+    DUP; N=T;
+    if (N &= 0x8) {
         T=0x13; // t t' -- t tmod // first bit
         gpio_put(T, 1); // DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W&=0x4) {
+    DROP; DUP; N=T;
+    if (N&=0x4) {
         T=0x12;
         gpio_put(T, 1); // DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W&=0x2) {
+    DROP; DUP; N=T;
+    if (N&=0x2) {
         T=0x11;
         gpio_put(T,1); // DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W&=0x1) {
+    DROP; DUP; N=T;
+    if (N&=0x1) {
         T=0x10;
         gpio_put(T,1); // DROP; DROP; return;
     }
@@ -1076,23 +1080,23 @@ void _setmaskbb(){
 }
 
 void _clrmask_bb() {
-    DUP; W=T;
-    if (W &= 0x8) {
+    DUP; N=T;
+    if (N &= 0x8) {
         T=0x13; // t t' -- t tmod // first bit
         gpio_put(T, 0); // DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W&=0x4) {
+    DROP; DUP; N=T;
+    if (N&=0x4) {
         T=0x12;
         gpio_put(T, 0); // DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W&=0x2) {
+    DROP; DUP; N=T;
+    if (N&=0x2) {
         T=0x11;
         gpio_put(T,0); // DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W&=0x1) {
+    DROP; DUP; N=T;
+    if (N&=0x1) {
         T=0x10;
         gpio_put(T,0); // DROP; DROP; return;
     }
@@ -1112,25 +1116,25 @@ void _setmask_aa(){
     // gpio_set_mask (uint32_t mask);
     // gpio_set_mask ((uint32_t) T);
 
-    DUP; W=T;
-    if (W == 0x13) {
-        T=W&=0x13; // t t' -- t tmod // first bit
+    DUP; N=T;
+    if (N == 0x13) {
+        T=N&=0x13; // t t' -- t tmod // first bit
         gpio_put(T, 1); DROP; DROP; return;
     }
 
-    DROP; DUP; W=T;
-    if (W==0x12) {
-        T=W&=0x12;
+    DROP; DUP; N=T;
+    if (N==0x12) {
+        T=N&=0x12;
         gpio_put(T, 1); DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W==0x11) {
-        T=W&0x11;
+    DROP; DUP; N=T;
+    if (N==0x11) {
+        T=N&0x11;
         gpio_put(T,1); DROP; DROP; return;
     }
-    DROP; DUP; W=T;
-    if (W==0x10) {
-        T=W&0x10;
+    DROP; DUP; N=T;
+    if (N==0x10) {
+        T=N&0x10;
         gpio_put(T,1); DROP; DROP; return;
     }
     DROP;
@@ -1285,10 +1289,10 @@ void _clrmask_aa(){
 // ###bookmark
 
 void _gpio_put_masked() { // ( mask value  -- )
-    W = T * GLOBMASK ; // GPIO 6+ // W = T * 0x10000; // GPIO 16+
+    N = T * GLOBMASK ; // GPIO 6+ // W = T * 0x10000; // GPIO 16+
     DROP;
     T = T * GLOBMASK ; // T = T * 0x10000;
-    gpio_put_masked(T, W); // reversed 15:19z 06 Apr
+    gpio_put_masked(T, N); // reversed 15:19z 06 Apr
     DROP;
 }
 
@@ -1395,6 +1399,18 @@ void _lv3_store() {
     DROP;
 }
 
+/*
+void _spd_store() {
+    SPD=T;
+    DROP;
+}
+
+void _spd_fetch(){
+    DUP;
+    T=SPD;
+}
+*/
+
 void _execute();
 
 void (*function[])()={
@@ -1465,6 +1481,8 @@ void (*function[])()={
     _lv3_store,      // 81
     _wait_1_usec,    // 82
     _wait_1000_usec, // 83
+   //  _spd_store,
+   //  _spd_fetch,
     _dropzbranch ,   // 84
 };
 
@@ -1643,7 +1661,7 @@ int forth_main() {
     strcpy(print_string, " gpm takes two arguments, ( mask value -- )\n");
     printf("%s", print_string);
 
-    printf("\ntry:   words    init    init-lcd    run\n");
+    printf("\ntry:   words    init    init-lcd    wokwi    run\n");
 
     while(1) {
         // uint8_t ch_key = getKey();

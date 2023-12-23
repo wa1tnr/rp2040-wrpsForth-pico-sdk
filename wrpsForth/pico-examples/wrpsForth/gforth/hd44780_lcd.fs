@@ -1,4 +1,6 @@
-\ hd44780_lcd.fs  4 April 2022
+\ hd44780_lcd.fs
+
+\ Sat  9 Apr 15:59:14 UTC 2022
 
 \ long pin on the right, resistor on short pin to ground
 \ that makes long pin anode
@@ -310,7 +312,22 @@ decimal 65 hex . 40 ok
 \ : pulseout-E-10  (  - ) [ asm  .E cpl ] 100 us [ asm  .E cpl ] ;
 
 \ : xxpulseout-E-10  (  - )  .E setb 100 #, us .E clr ;
-: pulseout-E  (  - )  .E setb 800 #, ms .E clr ;
+
+
+
+\ -------------- good place to add a delay:
+\ -------------- good place to add a delay:
+\ -------------- good place to add a delay:
+
+\ the idiom '600 #, ms' sets a 600 millisecond delay (way more than needed)
+\ also modify the 'wait' word for longer times
+
+: pulseout-E  (  - )
+  .E setb
+   600 #, ms
+  .E clr
+;
+
 : poute pulseout-E ;
 
 \ ." dark h# 100 ms bright h# 200 ms dark cr" cr ;
@@ -352,16 +369,8 @@ decimal 65 hex . 40 ok
 ;
 
 : wait
-  250 #, ms
-  250 #, ms
-  250 #, ms
-  250 #, ms
-  250 #, ms
-  250 #, ms
+  400 #, ms
 ;
-
-\ : orl $3f #, gpm ; ( mask -- )
-\ : anl invert 0 #,  gpm ; ( mask -- )
 
 : pins 1 #, drop ; \ syntax sugar
 
@@ -412,75 +421,127 @@ decimal 65 hex . 40 ok
 \ orl .s --> -99 -98 -97  cr 
 
 
-: init-lcd ( -- )
-  clrbits    \ %00000011 # pins mov \ Set command mode, 0 command.
-  initGPIO   \ %11111100 # dirs orl \ Set pins as outputs.
-  200 #, ms  \ wait 200 ms for LCD reset.
-  clrbits
-  $c #, setmask \ %00110000 # pins mov \ Init instruction
-  wait
-  pulseout-E 100 #, ms
-  wait
-  pulseout-E 100 #, ms
-  wait
-  pulseout-E 100 #, ms
-  wait
-  clrbits
-  wait
-  $8 #, setmask
-  wait
-  pulseout-E 100 #, ms
-  wait
-  $28 #, write-lcd 100 #, ms
-  wait
-  $0e #, write-lcd  10 #, ms
-  wait
-  $01 #, write-lcd 100 #, ms
-  wait
-  $02 #, write-lcd  10 #, ms
-  wait
-  data
-;
-
-
-
-
-
-
-
-: testus dark bright
-  \ results: 3x longer at six seconds wokwi than expected (testms was fine on wokwi)
-
-  \ two seconds LED on
-  200 #, for \ 2000 in realtime hardware but 200 for wokwi
-
-  \ one millisecond begins
-      4 #, for
-          25 #, us \ 250 real world so try 25 wokwi
-      next
-  \ one millisecond ends
-  next
-  dark
-;
-
-: testms dark bright
-  \ same human interval 2 sec as in testus
-  100 #, for 2 #, ms next \ 1000 realtime 100 wokwi
-  dark
-;
+: init-lcd  (  - )
+\ - Also based on working BASIC code.
+	\ [ in-assembler
+        \ 0 #, anl \ instruction all data clear
+        \ h# 3f h# 0 gpm cr
+	\ %00000011 # pins mov
+        $3f #, 0 #, gpm
+        wait
+	\ %11111100 # dirs orl ]
+        initGPIO
+	200 #, ms
+        wait
+	\ [ in-assembler
+	\ %00110000 # pins mov ]
+        $3f #, $c #, gpm
+        wait
+	pulseout-E 100 #, ms
+        wait
+	pulseout-E 100 #, ms
+        wait
+	pulseout-E 100 #, ms
+        wait
+	\ [ in-assembler
+	\ %00100000 # pins mov ]
+        $3f #, $8 #, gpm
+        wait
+	pulseout-E 100 #, ms
+        wait
+	$28 #, write-lcd 100 #, ms
+        wait
+	$0e #, write-lcd 10 #, ms
+        wait
+	$01 #, write-lcd 100 #, ms
+        wait
+	$02 #, write-lcd 10 #, ms
+        wait
+	data
+	;
 
 \ for testus and testms:
 \     03:05z 04 Apr 2022: both tests give about 2 seconds of LED ON time.
 
-: pulsed ( -- ) ." pulsed ( -- ) "
-  ." dark h# 100 ms bright h# 200 ms dark cr" cr ;
+\ : init 0x63 #, negate dup 1+ dup 1+ cr .s cr ;
+: init $63 #, negate dup 1+ dup 1+ cr .s cr ;
 
-: testvv ." hd44780 LCD  02:45z" cr cr
-  ." try:  testus  or  testms to see LED blink for a 2 second interval." cr
+: wwaa
+  $2d #, write-lcd cr \ - minus
+  $2d #, write-lcd cr \ - minus
+  $2d #, write-lcd cr \ - minus
 ;
 
-: tell ." Thu  7 Apr 07:12:59 UTC 2022" cr ;
+: wwbb
+  $20 #, write-lcd cr \   space
+  $20 #, write-lcd cr \   space
+  $57 #, write-lcd cr \   'W'
+;
 
-: init 0x63 #, negate dup 1+ dup 1+ cr .s cr ;
+: wwcc
+  $6f #, write-lcd cr \   'o'
+  $6b #, write-lcd cr \   'k'
+  $77 #, write-lcd cr \   'w'
+  $69 #, write-lcd cr \   'i'
+;
+
+: wwdd
+  $20 #, write-lcd cr \   space
+  $20 #, write-lcd cr \   space
+  $2d #, write-lcd cr \ - minus
+  $2d #, write-lcd cr \ - minus
+  $2d #, write-lcd cr \ - minus
+;
+
+\ : signoff cr ." That was a demo " cr ;
+: signoff 1 #, drop ;
+
+: wwee
+    1 #, \ 2^0
+    dup  \ 1 -- 1 1
+    2*   \ 1 1 -- 1 2
+    dup  \ 1 2 -- 1 2 2
+    2*   \ 1 2 2 -- 1 2 4
+    dup  \ 1 2 4 -- 1 2 4 4
+    2*   \ 1 2 4 4 -- 1 2 4 8
+    dup  \ 1 2 4 8 -- 1 2 4 8 8
+    2*   \ 1 2 4 8 8 -- 1 2 4 8 16
+    +    \ 1 2 4 8 16 -- 1 2 4 24
+    +    \ 1 2 4 24 -- 1 2 28
+    +    \ 1 2 28 -- 1 30
+    +    \ 1 30 -- 31
+
+   anl \ clear LEDs
+   3 #, for wait next
+
+   3 #, for
+     $3f #, clrmask
+     7 #, for wait next
+     $3f #, setmask
+     7 #, for wait next
+   next
+
+   $3f #, clrmask \ make dark for the next set:
+     14 #, for wait next
+
+   1 #, setb  wait 2 #, setb wait 4 #, setb wait 8 #, setb wait
+   16 #, setb wait 32 #, setb 3 #, for wait next
+   1 #, clr   wait 2 #, clr  wait 4 #, clr wait  8 #, clr  wait
+   16 #, clr  wait 32 #, clr 3 #, for wait next
+   $2d #, emit
+   $2d #, emit
+   $2d #, emit
+   .s cr
+;
+
+: wwzz wwaa wwbb wwcc wwdd ;
+
+: wokwi \ 2 #, speedy ! 
+  init init-lcd 1 #, drop
+  wwzz \ main payload
+  wwee signoff ; \ signed ;
+
+\ : xtell ." Sun 10 Apr 13:50:08 UTC 2022" cr ;
+: tell ." Sun 10 Apr 13:25:49 UTC 2022" cr ;
 
 \  END.

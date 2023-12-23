@@ -127,6 +127,8 @@ code lv2! 80 , \ new
 code lv3! 81 , \ new
 code tusec 82 ,
 code msec 83 ,
+\ code speed! 84 ,
+\ code speed@ 85 ,
 -code /branch  84 ,
 
 :m begin (  - a)  here m;
