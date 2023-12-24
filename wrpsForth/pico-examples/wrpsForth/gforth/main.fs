@@ -7,9 +7,10 @@ turnkey
     initGPIO
 
 
-: test  ." this is going to be good " cr
+: test  cr cr ." this is going to be good " cr
   ." meta-compilation in gforth " cr
-  ." 24 Dec 2023 02:23 UTC. " ;
+  ." code reduction - reduced memory." cr cr
+  ." Sun 24 Dec 17:50:02 UTC 2023";
 
 : tsecxpj tusec ; \ wait 10 usec   - 10 microseconds
 : tsecrrr msec ;  \ wait 1000 usec - 1 millisecond
@@ -32,82 +33,12 @@ turnkey
 
 : timex 5000 #, for msec next ;
 
-: blank
-  gl_ lv3!
-  gl_ lv2!
-  gl_ lv1!
-  gl_ lv0!
-;
-
-: msga \ no stack effects
-  start
-  gl7 lv3!
-  gl6 lv2!
-  gl5 lv1!
-  gl4 lv0!
-  6 #, cmd!
-;
-
-: msgb \ no stack effects
-  start
-
-  gll lv3!
-  gle lv2!
-  gl_ lv1!
-  gl_ lv0!
-  6 #, cmd!
-  timex
-  blank
-
-  glf lv3!
-  gl0 lv2!
-  glc lv1!
-  gla lv0!
-  timex
-  blank
-
-  glc lv3!
-  gla lv2!
-  glf lv1!
-  gle lv0!
-  timex
-  blank
-
-  gl7 lv3!
-  gl7 lv2!
-  gl7 lv1!
-  gl7 lv0!
-  timex
-  blank
-
-  gl8 lv3!
-  gl8 lv2!
-  gl8 lv1!
-  gl8 lv0!
-  timex
-  blank
-
-  gl0 lv3!
-  gl0 lv2!
-  gl0 lv1!
-  gl0 lv0!
-  timex
-  blank
-
-  gl4 lv3!
-  gl4 lv2!
-  gl4 lv1!
-  gl4 lv0!
-  timex
-  blank
-;
-
 : noppp 1 #, drop ;
 
 \ rp2040-sh_regForth-a/rp2040-sh_regForth-bb/main.fs
 
-: id ." Sun 24 Dec 02:23:51 UTC 2023" cr
-     ." kotari tupelo " cr
+: id ." Sun 24 Dec 17:50:02 UTC 2023" cr
+     ." zuma telfar kotari " cr
      ." rp2040" cr ;
 
 turnkey decimal initGPIO interpret
