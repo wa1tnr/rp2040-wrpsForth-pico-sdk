@@ -8,6 +8,10 @@ Based on:
 
 Wokwi links (RP2040, pico-sdk)
 
+branch exp-bb (prep for merge to dvlp-aa):
+
+  https://wokwi.com/projects/385018162332372993
+
 with backlight on (xgreen colors hide the wires,
 no current-limiting series resistor used at all,
 as it is wokwi):
