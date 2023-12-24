@@ -428,35 +428,35 @@ decimal 65 hex . 40 ok
         \ h# 3f h# 0 gpm cr
 	\ %00000011 # pins mov
         $3f #, 0 #, gpm
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	\ %11111100 # dirs orl ]
         initGPIO
 	200 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	\ [ in-assembler
 	\ %00110000 # pins mov ]
         $3f #, $c #, gpm
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	pulseout-E 100 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	pulseout-E 100 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	pulseout-E 100 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	\ [ in-assembler
 	\ %00100000 # pins mov ]
         $3f #, $8 #, gpm
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	pulseout-E 100 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	$28 #, write-lcd 100 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	$0e #, write-lcd 10 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	$01 #, write-lcd 100 #, ms
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	$02 #, write-lcd 10 #, ms
-        wait
+        wait \ 24 Dec 2023 kept just one wait
 	data
 	;
 
