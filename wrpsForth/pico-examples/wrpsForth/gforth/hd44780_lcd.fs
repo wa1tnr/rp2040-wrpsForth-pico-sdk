@@ -380,7 +380,7 @@ decimal 65 hex . 40 ok
 	\ %00001011 # pins anl ]  \ amr instruction
         \ %000010   # pins anl \ without USART
         $2 #, anl \ .RS setb \ data wrpsForth  four data bit set to zero the 11 is USART
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	dup \ both wrpsForth and amrForth - for split nybble
 	\ [ in-assembler
 	\ SP inc  Apop
@@ -389,20 +389,20 @@ decimal 65 hex . 40 ok
 
   	\ A pins orl ] \ amrForth
         2/ 2/ orl \ right-shift data wrpsForth
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	pulseout-E
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	$10 #, * \ left-shift nybble
 	\ [ in-assembler
 	\ SP inc  Apop
 	\ %00001011 # pins anl \ amr
         $2 #, anl \ instruction wrpsForth  four data bit set to zero the 11 is USART
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	\ A pins orl ]
         2/ 2/ orl \ wrpsForth
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	pulseout-E
-        wait
+        \ 24 Dec 2023 had wait here \ wait
 	;
 
 \ ###bookmark
@@ -456,7 +456,7 @@ decimal 65 hex . 40 ok
 	$01 #, write-lcd 100 #, ms
         \ 24 Dec 2023 had wait here \ wait
 	$02 #, write-lcd 10 #, ms
-        wait \ 24 Dec 2023 kept just one wait
+        \ 24 Dec 2023 had wait here \ wait
 	data
 	;
 
@@ -534,6 +534,7 @@ decimal 65 hex . 40 ok
    .s cr
 ;
 
+\ specify + send the message to the 16x2 LCD:
 : wwzz wwaa wwbb wwcc wwdd ;
 
 : wokwi \ 2 #, speedy ! 
