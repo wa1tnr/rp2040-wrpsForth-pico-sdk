@@ -6,7 +6,7 @@ turnkey
     decimal
     initGPIO
 
-: test  ." this is going to be good " ;
+: test  ." You are seeing main.fs metacompiled to memory.h wow " ;
 
 : tsecxpj tusec ; \ wait 10 usec   - 10 microseconds
 : tsecrrr msec ;  \ wait 1000 usec - 1 millisecond
