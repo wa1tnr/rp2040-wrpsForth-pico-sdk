@@ -1,0 +1,15 @@
+
+[ 37%] Performing build step for 'ELF2UF2Build'
+[ 50%] Building CXX object CMakeFiles/elf2uf2.dir/main.cpp.o
+[100%] Linking CXX executable elf2uf2
+[100%] Built target elf2uf2
+[ 37%] No install step for 'ELF2UF2Build'
+[ 37%] Completed 'ELF2UF2Build'
+[ 37%] Built target ELF2UF2Build
+[ 37%] Building C object wrpsForth/forth/CMakeFiles/forth.dir/forth.c.obj
+dec_23-circsim.d/new_wok_CirSimA-temp-h/wrpsForth/pico-examples/wrpsForth/forth/forth.c:359:2: warning: #warning no bootrom code [-Wcpp]
+  359 | #warning no bootrom code
+      |  ^~~~~~~
+[ 38%] Building C object wrpsForth/forth/CMakeFiles/forth.dir/dec_23-circsim.d/new_wok_CirSimA-temp-h/wrpsForth/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+[ 38%] Building C object wrpsForth/forth/CMakeFiles/forth.dir/dec_23-circsim.d/new_wok_CirSimA-temp-h/wrpsForth/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+
