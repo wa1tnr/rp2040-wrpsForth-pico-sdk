@@ -1,4 +1,8 @@
-Sun 24 Dec 01:11:43 UTC 2023
+Sun 24 Dec 02:16:11 UTC 2023
+
+seems to function correctly - the wokwi word runs
+
+  https://wokwi.com/projects/384958726097823745
 
 update with revert memory.h fix:
 
