@@ -1,4 +1,10 @@
-Sun 24 Dec 02:16:11 UTC 2023
+Sun 24 Dec 03:05:57 UTC 2023
+
+with backlight on (xgreen colors hide the wires,
+no current-limiting series resistor used at all,
+as it is wokwi):
+
+  https://wokwi.com/projects/384961767843874817
 
 currently:
 
