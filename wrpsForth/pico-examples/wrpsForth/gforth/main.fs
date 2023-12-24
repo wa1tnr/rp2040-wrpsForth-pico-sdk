@@ -6,11 +6,10 @@ turnkey
     decimal
     initGPIO
 
-: testDD ." meta-compilation in gforth. " ;
 
 : test  ." this is going to be good " cr
-  testDD ;
-
+  ." meta-compilation in gforth " cr
+  ." 24 Dec 2023 02:09 UTC. " ;
 
 : tsecxpj tusec ; \ wait 10 usec   - 10 microseconds
 : tsecrrr msec ;  \ wait 1000 usec - 1 millisecond
@@ -107,9 +106,8 @@ turnkey
 
 \ rp2040-sh_regForth-a/rp2040-sh_regForth-bb/main.fs
 
-: id ." Wed  2 Feb 15:05:53 UTC 2022" cr
-     ." cerfaxita    74hc595 shift register" cr
-     ." +fthenc +cmd +timing.cpp" cr \ +fthenc is forth encoding of glyphs
+: id ." Sun 24 Dec 02:10:44 UTC 2023" cr
+     ." tupelo daru " cr
      ." rp2040-sh_regForth-bb" cr ;
 
 turnkey decimal initGPIO interpret
