@@ -51,7 +51,7 @@ include ./compiler.fs \ gforth v7
 \ include ./compiler_gfv6.fs \ kludge for gforth v6 - did NOT work
 include ./core.fs  \ core Forth words
 include ./libtnr.fs \ local library
-include ./libglyph.fs \ local library
+\ commented 24 Dec 2023 include ./libglyph.fs \ local library
 include ./main.fs  \ application code
 include ./hd44780_lcd.fs \ after main.fs
 include ./app.fs \ after hd44780_lcd.fs
