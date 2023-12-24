@@ -10,7 +10,13 @@ turnkey
 : test  cr cr ." this is going to be good " cr
   ." meta-compilation in gforth " cr
   ." code reduction - reduced memory." cr cr
-  ." Sun 24 Dec 17:50:02 UTC 2023";
+  ."  " cr
+  ." Mem sat there at 1207 bytes, even with " cr
+  ." an extended dot quote string added. " cr
+  ."  " cr
+  ." No idea why. ;)  " cr
+
+  ." Sun 24 Dec 18:14:43 UTC 2023";
 
 : tsecxpj tusec ; \ wait 10 usec   - 10 microseconds
 : tsecrrr msec ;  \ wait 1000 usec - 1 millisecond

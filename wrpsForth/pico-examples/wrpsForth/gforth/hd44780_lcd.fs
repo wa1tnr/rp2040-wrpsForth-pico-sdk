@@ -494,7 +494,14 @@ decimal 65 hex . 40 ok
 ;
 
 \ : signoff cr ." That was a demo " cr ;
-: signoff 1 #, drop ;
+\ makes no sense: changed the string length but
+\ program mem image just sits there at a fixed
+\ value (1207 presently).
+
+\ not sure wigo
+
+: signoff cr ." That was a demo - now the blinkenlights! " cr
+  1 #, drop ;
 
 : wwee
     1 #, \ 2^0
@@ -539,7 +546,9 @@ decimal 65 hex . 40 ok
 : wokwi \ 2 #, speedy ! 
   init init-lcd 1 #, drop
   wwzz \ main payload
-  wwee signoff ; \ signed ;
+  signoff wwee \ signed
+  \ show blinkenlights last iteration:
+  wwee ;
 
 \ : xtell ." Sun 10 Apr 13:50:08 UTC 2022" cr ;
 : tell ." Sun 10 Apr 13:25:49 UTC 2022" cr ;
