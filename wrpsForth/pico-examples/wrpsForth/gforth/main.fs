@@ -6,7 +6,10 @@ turnkey
     decimal
     initGPIO
 
-: test  ." this is going to be good " ;
+: testDD ." meta-compilation in gforth. " ;
+
+: test  ." this is going to be good " cr
+  testDD ;
 
 
 : tsecxpj tusec ; \ wait 10 usec   - 10 microseconds
