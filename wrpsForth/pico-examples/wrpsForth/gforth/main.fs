@@ -9,7 +9,7 @@ turnkey
 
 : test  ." this is going to be good " cr
   ." meta-compilation in gforth " cr
-  ." 24 Dec 2023 02:09 UTC. " ;
+  ." 24 Dec 2023 02:23 UTC. " ;
 
 : tsecxpj tusec ; \ wait 10 usec   - 10 microseconds
 : tsecrrr msec ;  \ wait 1000 usec - 1 millisecond
@@ -106,9 +106,9 @@ turnkey
 
 \ rp2040-sh_regForth-a/rp2040-sh_regForth-bb/main.fs
 
-: id ." Sun 24 Dec 02:10:44 UTC 2023" cr
-     ." tupelo daru " cr
-     ." rp2040-sh_regForth-bb" cr ;
+: id ." Sun 24 Dec 02:23:51 UTC 2023" cr
+     ." kotari tupelo " cr
+     ." rp2040" cr ;
 
 turnkey decimal initGPIO interpret
 
