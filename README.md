@@ -1,5 +1,13 @@
 Sun 24 Dec 03:05:57 UTC 2023
 
+Based on:
+
+  Charley Shattuck's ITC Forth (iirc!)
+
+  https://github.com/CharleyShattuck/ARM-Forth/
+
+Wokwi links (RP2040, pico-sdk)
+
 with backlight on (xgreen colors hide the wires,
 no current-limiting series resistor used at all,
 as it is wokwi):
